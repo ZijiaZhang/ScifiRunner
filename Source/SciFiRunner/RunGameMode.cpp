@@ -4,8 +4,24 @@
 #include "RunGameMode.h"
 #include "RunnerBlock.h"
 #include "Engine/World.h"
+#include <stdlib.h>
+#include "RunnerBlock_Normal.h"
+
+
+void ARunGameMode::BeginPlay() {
+	for (int i = 0; i < 10; i++) {
+		SpawnNewBlock();
+	}
+}
 
 void ARunGameMode::SpawnNewBlock() {
+	if (AllBlocks.Num() == 0)
+		return;
 	FActorSpawnParameters SpawnInfo;
-	ARunnerBlock* block = GetWorld()->SpawnActor<ARunnerBlock>(Location, Rotation, SpawnInfo);
+
+	int randInt = rand() % AllBlocks.Num();
+	
+	ARunnerBlock* block = GetWorld()->SpawnActor<ARunnerBlock>(AllBlocks[randInt],Location, Rotation,SpawnInfo);
+	Location = block->getNextLocation();
+	Rotation = block->getNextRotation();
 }

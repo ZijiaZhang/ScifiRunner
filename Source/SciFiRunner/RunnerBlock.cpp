@@ -2,14 +2,17 @@
 
 
 #include "RunnerBlock.h"
-#include "Components/StaticMeshComponent.h"
+#include "Components/ArrowComponent.h"
+
 // Sets default values
 ARunnerBlock::ARunnerBlock()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	Floor = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("floor"));
-	RootComponent = Floor;
+	RootComponent = CreateDefaultSubobject<UPrimitiveComponent>("Root");
+	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
+	Arrow->AttachTo(RootComponent);
+	
 }
 
 // Called when the game starts or when spawned
@@ -24,5 +27,13 @@ void ARunnerBlock::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+FVector ARunnerBlock::getNextLocation() {
+	return Arrow->GetComponentLocation();
+}
+
+FRotator ARunnerBlock::getNextRotation() {
+	return Arrow->GetComponentRotation();
 }
 

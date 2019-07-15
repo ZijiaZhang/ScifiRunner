@@ -18,5 +18,8 @@ class SCIFIRUNNER_API ARunGameMode : public AGameMode
 		FRotator Rotation = FRotator(0.0f);
 		
 	public:
-		virtual void SpawnNewBlock();
+		void SpawnNewBlock();
+		virtual void BeginPlay() override;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Any)
+		TArray< TSubclassOf<class ARunnerBlock>> AllBlocks;
 };
