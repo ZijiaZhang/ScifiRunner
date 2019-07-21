@@ -4,6 +4,7 @@
 #include "RunnerBlock_Normal.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/ArrowComponent.h"
+#include "Components/BoxComponent.h"
 
 ARunnerBlock_Normal::ARunnerBlock_Normal():ARunnerBlock() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -18,4 +19,6 @@ ARunnerBlock_Normal::ARunnerBlock_Normal():ARunnerBlock() {
 	
 	Arrow->SetRelativeLocation(FVector(256, 0, 0));
 	
+	spawnTrigger->SetBoxExtent(FVector(20, 128, 128));
+	spawnTrigger->SetRelativeLocation(FVector(256, 0, 64));
 }
