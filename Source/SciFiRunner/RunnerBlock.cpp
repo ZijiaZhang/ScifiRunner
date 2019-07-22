@@ -12,21 +12,21 @@ ARunnerBlock::ARunnerBlock()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	RootComponent = CreateDefaultSubobject<UPrimitiveComponent>("Root");
+	RootComponent = CreateDefaultSubobject<UArrowComponent>("Root");
 	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
-	Arrow->AttachTo(RootComponent);
+	Arrow->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 
 	spawnTrigger = CreateDefaultSubobject<UBoxComponent>("nextSpwan");
-	spawnTrigger->AttachTo(RootComponent);
+	spawnTrigger->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	spawnTrigger->SetGenerateOverlapEvents(true);
-	
+	spawnTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARunnerBlock::triggerOverlap);
 }
 
 // Called when the game starts or when spawned
 void ARunnerBlock::BeginPlay()
 {
 	Super::BeginPlay();
-	spawnTrigger->OnComponentBeginOverlap.AddDynamic(this, &ARunnerBlock::triggerOverlap);
+	
 }
 
 // Called every frame
