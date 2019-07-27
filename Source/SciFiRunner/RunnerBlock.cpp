@@ -47,10 +47,6 @@ FRotator ARunnerBlock::getNextRotation() {
 void ARunnerBlock::triggerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult){
 		if (OtherActor == (AActor*)UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)) {
 			((ARunGameMode*)GetWorld()->GetAuthGameMode())->SpawnNewBlock();
-			UE_LOG(LogTemp, Warning, TEXT("Success"));
-		}
-		else {
-			UE_LOG(LogTemp, Warning, TEXT("No"));
 		}
 }
 

@@ -14,6 +14,12 @@ class SCIFIRUNNER_API ACoins : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ACoins();
+	UPROPERTY(AdvancedDisplay, EditAnywhere)
+		UStaticMeshComponent* Coin;
+	UPROPERTY(AdvancedDisplay, EditAnywhere)
+		class UBoxComponent* collisionTrigger;
+	UFUNCTION()
+	void collectCoin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 protected:
 	// Called when the game starts or when spawned
