@@ -19,6 +19,7 @@ class SCIFIRUNNER_API ARunGameMode : public AGameMode
 		
 	public:
 		void SpawnNewBlock();
+		void SpawnInitialBlock();
 		virtual void BeginPlay() override;
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Any)
 		TArray< TSubclassOf<class ARunnerBlock>> AllBlocks;
