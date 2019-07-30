@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include "RunGameMode.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 // Sets default values
 ARunnerBlock::ARunnerBlock()
@@ -47,6 +48,13 @@ FRotator ARunnerBlock::getNextRotation() {
 void ARunnerBlock::triggerOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult){
 		if (OtherActor == (AActor*)UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)) {
 			((ARunGameMode*)GetWorld()->GetAuthGameMode())->SpawnNewBlock();
+			FTimerHandle MemberTimerHandle;
+		GetWorldTimerManager().SetTimer(MemberTimerHandle, this, &ARunnerBlock::DestroySelf, 2.0f, false,3.0f);
 		}
+		
+}
+
+void ARunnerBlock::DestroySelf() {
+	Destroy();
 }
 

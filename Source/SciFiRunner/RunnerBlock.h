@@ -25,5 +25,6 @@ class SCIFIRUNNER_API ARunnerBlock : public AActor
 		virtual void Tick(float DeltaTime) override;
 		FVector getNextLocation();
 		FRotator getNextRotation();
-
+		UFUNCTION()
+		void DestroySelf();
 };
