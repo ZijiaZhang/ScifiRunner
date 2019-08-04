@@ -15,15 +15,13 @@ void ARunGameMode::BeginPlay() {
 }
 
 void ARunGameMode::SpawnNewBlock() {
-	if (AllBlocks.Num() == 0)
-		return;
-	FActorSpawnParameters SpawnInfo;
-
-	int randInt = rand() % AllBlocks.Num();
-	
-	ARunnerBlock* block = GetWorld()->SpawnActor<ARunnerBlock>(AllBlocks[randInt],Location, Rotation,SpawnInfo);
-	Location = block->getNextLocation();
-	Rotation = block->getNextRotation();
+	if (blockCount > 10) {
+		SpawnTurnBlock();
+		blockCount = 0;
+	}
+	else
+		SpawnNormalBlock();
+	blockCount++;
 }
 
 void ARunGameMode::SpawnInitialBlock() {
@@ -32,6 +30,31 @@ void ARunGameMode::SpawnInitialBlock() {
 	int randInt = rand() % AllBlocks.Num();
 
 	ARunnerBlock_Normal* block = GetWorld()->SpawnActor<ARunnerBlock_Normal> (Location, Rotation, SpawnInfo);
+	Location = block->getNextLocation();
+	Rotation = block->getNextRotation();
+}
+
+
+void ARunGameMode::SpawnNormalBlock() {
+	if (AllBlocks.Num() == 0)
+		return;
+	FActorSpawnParameters SpawnInfo;
+
+	int randInt = rand() % AllBlocks.Num();
+
+	ARunnerBlock* block = GetWorld()->SpawnActor<ARunnerBlock>(AllBlocks[randInt], Location, Rotation, SpawnInfo);
+	Location = block->getNextLocation();
+	Rotation = block->getNextRotation();
+}
+
+void ARunGameMode::SpawnTurnBlock() {
+	if (TurnBlocks.Num() == 0)
+		return;
+	FActorSpawnParameters SpawnInfo;
+
+	int randInt = rand() % TurnBlocks.Num();
+
+	ARunnerBlock* block = GetWorld()->SpawnActor<ARunnerBlock>(TurnBlocks[randInt], Location, Rotation, SpawnInfo);
 	Location = block->getNextLocation();
 	Rotation = block->getNextRotation();
 }
