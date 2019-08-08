@@ -15,7 +15,7 @@ class SCIFIRUNNER_API ARunGameMode : public AGameMode
 	GENERATED_BODY()
 	private:
 		FVector Location = FVector(0.0f);
-		FRotator Rotation = FRotator(0.0f);
+		FRotator Rotation = FRotator(0.0f,-90.0f,0.0f);
 		void SpawnNormalBlock();
 		void SpawnTurnBlock();
 		int blockCount = 0;
