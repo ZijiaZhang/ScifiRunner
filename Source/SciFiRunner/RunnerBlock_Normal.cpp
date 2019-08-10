@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// COPYRIGHT 2019 Zijia Zhang All Rights Reserved
 
 
 #include "RunnerBlock_Normal.h"
