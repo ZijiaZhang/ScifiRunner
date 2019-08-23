@@ -37,9 +37,12 @@ void ARunGameMode::SpawnNewBlock() {
 void ARunGameMode::SpawnInitialBlock() {
 	FActorSpawnParameters SpawnInfo;
 
-	int randInt = rand() % AllBlocks.Num();
-
-	ARunnerBlock_Normal* block = GetWorld()->SpawnActor<ARunnerBlock_Normal> (Location, Rotation, SpawnInfo);
+	
+	ARunnerBlock* block;
+	if(TurnBlocks.Num() ==0)
+		block = GetWorld()->SpawnActor<ARunnerBlock_Normal>(Location, Rotation, SpawnInfo);
+	else
+		block = GetWorld()->SpawnActor<ARunnerBlock>(AllBlocks[0], Location, Rotation, SpawnInfo);
 	Location = block->getNextLocation();
 	Rotation = block->getNextRotation();
 }
