@@ -15,9 +15,5 @@
 		}
 	],
 	"Plugins": [
-		{
-			"Name": "RemoteSession",
-			"Enabled": true
-		}
 	]
 }
