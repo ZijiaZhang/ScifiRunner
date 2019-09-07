@@ -35,3 +35,11 @@ void AMyRunnerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 void AMyRunnerCharacter::ActivateMask() {
 	mask--;
 }
+
+void AMyRunnerCharacter::TurnLeft(){
+	return TurnLeftInternal();
+}
+
+void AMyRunnerCharacter::TurnLeftInternal_Implementation() {
+	TargetRotation += FRotator(0.f, -90.f, 0.f);
+}
