@@ -4,18 +4,49 @@
 #include "MainPlayerController.h"
 #include "Components/InputComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "MyRunnerCharacter.h"
+
 
 void AMainPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
 	check(InputComponent);
-	InputComponent->BindTouch(IE_Pressed, this, &AMainPlayerController::Touched);
+	InputComponent->BindTouch(IE_Pressed, this, &AMainPlayerController::Pressed);
+	InputComponent->BindTouch(IE_Released, this, &AMainPlayerController::Released);
+	
+	
 }
 
-void AMainPlayerController::Touched(ETouchIndex::Type TouchIndex, FVector Location)
+void AMainPlayerController::Pressed(ETouchIndex::Type FingerIndex, FVector Location)
 {
-	AMyRunnerCharacter* myCharacter = (AMyRunnerCharacter*)UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
-	myCharacter->ActivateMask();
+	isPressing = true;
+	
+	GetInputTouchState(ETouchIndex::Touch1,InitialTouchLocation.X, InitialTouchLocation.Y, isPressing);
+	//myCharacter->ActivateMask();
+}
+
+void AMainPlayerController::Released(ETouchIndex::Type FingerIndex, FVector Location) {
+	isPressing = false;
+	once = true;
+	//FinalTouchLocation = Location;
+
+}
+
+void AMainPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	bool isCurrentlyPressed;
+	GetInputTouchState(ETouchIndex::Touch1, FinalTouchLocation.X, FinalTouchLocation.Y, isCurrentlyPressed);
+	if (isPressing && (FinalTouchLocation - InitialTouchLocation).Size() > 100 && once) {
+		FVector2D Offset = FinalTouchLocation - InitialTouchLocation;
+		if (FMath::Abs(Offset.X) > FMath::Abs(Offset.Y) && Offset.X < 0) {
+			if(myCharacter)
+				myCharacter->TurnLeft();
+		}
+		once = false;
+	}
+}
+
+void AMainPlayerController::SetupPlayerCharacter(){
+	myCharacter = (AMyRunnerCharacter*)UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 }
