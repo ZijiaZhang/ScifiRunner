@@ -43,3 +43,11 @@ void AMyRunnerCharacter::TurnLeft(){
 void AMyRunnerCharacter::TurnLeftInternal_Implementation() {
 	TargetRotation += FRotator(0.f, -90.f, 0.f);
 }
+
+void AMyRunnerCharacter::TurnRight() {
+	return TurnRightInternal();
+}
+
+void AMyRunnerCharacter::TurnRightInternal_Implementation() {
+	TargetRotation += FRotator(0.f, 90.f, 0.f);
+}

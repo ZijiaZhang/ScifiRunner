@@ -18,20 +18,35 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	//Value of the oxigen mask.
 	UPROPERTY(EditAnywhere,BluePrintReadWrite)
 	int mask = 10;
+	//The target Location that player aims to.
 	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	FRotator TargetRotation = FRotator(0.f, -90.f,0.f);
+	////////////
+	//The Real TurnLeft Function, can be override in blueprint
+	////////////
 	UFUNCTION(BlueprintNativeEvent, meta = (DisplayName = "TurnLeft"))
 		void TurnLeftInternal();
 	void TurnLeftInternal_Implementation();
+	////////////
+	//The Real TurnRight Function, can be override in blueprint
+	////////////
+	UFUNCTION(BlueprintNativeEvent, meta = (DisplayName = "TurnLeft"))
+		void TurnRightInternal();
+	void TurnRightInternal_Implementation();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	//Activate one mask
 	virtual void ActivateMask();
 	UFUNCTION(BlueprintCallable)
 	void TurnLeft();
+	UFUNCTION(BlueprintCallable)
+	void TurnRight();
 };
