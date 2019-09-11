@@ -22,13 +22,11 @@ void AMainPlayerController::Pressed(ETouchIndex::Type FingerIndex, FVector Locat
 	isPressing = true;
 	
 	GetInputTouchState(ETouchIndex::Touch1,InitialTouchLocation.X, InitialTouchLocation.Y, isPressing);
-	//myCharacter->ActivateMask();
 }
 
 void AMainPlayerController::Released(ETouchIndex::Type FingerIndex, FVector Location) {
 	isPressing = false;
 	once = true;
-	//FinalTouchLocation = Location;
 
 }
 
@@ -37,11 +35,23 @@ void AMainPlayerController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	bool isCurrentlyPressed;
 	GetInputTouchState(ETouchIndex::Touch1, FinalTouchLocation.X, FinalTouchLocation.Y, isCurrentlyPressed);
+	//Will determine the  swipe geature from the user. Will only Trigger once.
 	if (isPressing && (FinalTouchLocation - InitialTouchLocation).Size() > 100 && once) {
 		FVector2D Offset = FinalTouchLocation - InitialTouchLocation;
+		//Swipe Left
 		if (FMath::Abs(Offset.X) > FMath::Abs(Offset.Y) && Offset.X < 0) {
 			if(myCharacter)
 				myCharacter->TurnLeft();
+		}
+		//Swipe Right
+		else if (FMath::Abs(Offset.X) > FMath::Abs(Offset.Y) && Offset.X > 0) {
+			if (myCharacter)
+				myCharacter->TurnRight();
+		}
+		//Swipe Up
+		else if (FMath::Abs(Offset.X) > FMath::Abs(Offset.Y) && Offset.Y > 0) {
+			if (myCharacter)
+				myCharacter->Jump();
 		}
 		once = false;
 	}
