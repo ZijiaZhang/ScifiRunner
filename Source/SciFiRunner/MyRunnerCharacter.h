@@ -36,7 +36,8 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, meta = (DisplayName = "TurnLeft"))
 		void TurnRightInternal();
 	void TurnRightInternal_Implementation();
-
+	virtual void MoveForwardAction(float value);
+	virtual void MoveRightAction(float value);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -49,4 +50,9 @@ public:
 	void TurnLeft();
 	UFUNCTION(BlueprintCallable)
 	void TurnRight();
+	UFUNCTION(BlueprintCallable)
+		void Turn();
+	
+	UFUNCTION(BlueprintCallable)
+	virtual void AddInputBinds();
 };

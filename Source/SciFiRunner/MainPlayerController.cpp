@@ -59,4 +59,5 @@ void AMainPlayerController::Tick(float DeltaTime)
 
 void AMainPlayerController::SetupPlayerCharacter(){
 	myCharacter = (AMyRunnerCharacter*)UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	myCharacter->AddInputBinds();
 }

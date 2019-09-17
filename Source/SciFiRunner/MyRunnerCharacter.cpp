@@ -2,6 +2,8 @@
 
 
 #include "MyRunnerCharacter.h"
+#include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMyRunnerCharacter::AMyRunnerCharacter()
@@ -15,6 +17,7 @@ AMyRunnerCharacter::AMyRunnerCharacter()
 void AMyRunnerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	
 }
 
@@ -50,4 +53,29 @@ void AMyRunnerCharacter::TurnRight() {
 
 void AMyRunnerCharacter::TurnRightInternal_Implementation() {
 	TargetRotation += FRotator(0.f, 90.f, 0.f);
+}
+
+void AMyRunnerCharacter::Turn() {
+	if (GetControlRotation() != TargetRotation) {
+		
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetControlRotation(
+			FMath::RInterpTo(GetControlRotation(), TargetRotation, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()), 15)
+		);
+	}
+}
+
+void AMyRunnerCharacter::MoveForwardAction(float value) {
+	
+	AddMovementInput(GetCapsuleComponent()->GetForwardVector(), 1);
+	Turn();
+}
+
+void AMyRunnerCharacter::AddInputBinds() {
+	InputComponent->BindAxis("MoveForward", this, &AMyRunnerCharacter::MoveForwardAction);
+}
+
+void AMyRunnerCharacter::MoveRightAction(float value) {
+
+	AddMovementInput(GetCapsuleComponent()->GetRightVector(), 1);
+	Turn();
 }
