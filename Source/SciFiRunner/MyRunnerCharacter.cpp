@@ -3,6 +3,8 @@
 
 #include "MyRunnerCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "Engine/World.h"
+#include "Bullet.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -78,4 +80,13 @@ void AMyRunnerCharacter::MoveRightAction(float value) {
 
 	AddMovementInput(GetCapsuleComponent()->GetRightVector(), 1);
 	Turn();
+}
+
+void AMyRunnerCharacter::Shoot() {
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Shoot"));
+	auto bullet = GetWorld()->SpawnActor<ABullet>(this->GetActorLocation(), FRotator());
+	bullet->SetActorLocation(this->GetActorLocation() + this->GetCapsuleComponent()->GetForwardVector() * 200);
+	bullet->direction = GetCapsuleComponent()->GetForwardVector();
+	bullet->speed = 1000;
 }

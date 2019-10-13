@@ -27,7 +27,12 @@ void AMainPlayerController::Pressed(ETouchIndex::Type FingerIndex, FVector Locat
 void AMainPlayerController::Released(ETouchIndex::Type FingerIndex, FVector Location) {
 	isPressing = false;
 	once = true;
-
+	bool isPress;
+	GetInputTouchState(ETouchIndex::Touch1, FinalTouchLocation.X, FinalTouchLocation.Y, isPress);
+	if ((FinalTouchLocation - InitialTouchLocation).Size() < 100) {
+		if (myCharacter)
+			myCharacter->Shoot();
+	}
 }
 
 void AMainPlayerController::Tick(float DeltaTime)

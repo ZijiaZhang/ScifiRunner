@@ -55,4 +55,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	virtual void AddInputBinds();
+
+	UFUNCTION(BlueprintCallable)
+		void Shoot();
 };
