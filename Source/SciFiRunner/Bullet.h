@@ -14,9 +14,12 @@ class SCIFIRUNNER_API ABullet : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABullet();
+	UPROPERTY(BlueprintReadWrite)
 	FVector direction;
+	UPROPERTY(BlueprintReadWrite)
 	float speed;
 	UStaticMeshComponent* MeshComponent;
+	UParticleSystemComponent* Partical;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
